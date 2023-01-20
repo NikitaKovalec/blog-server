@@ -9,7 +9,7 @@ import {postValidation} from './validations/post.js'
 import {checkAuth, handleValidationErrors} from './utils/index.js'
 import {UserController, PostController, CommentController} from './controllers/index.js'
 
-mongoose.connect('mongodb+srv://admin:a9092332Aa@cluster0.zw7ba1s.mongodb.net/blog?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGODB_URL)
   .then(() => console.log('DB ok'))
   .catch((err) => console.log('DB err', err))
 
@@ -60,9 +60,9 @@ app.post('/posts/:id/comments', checkAuth, CommentController.create)
 app.delete('/posts/:id/comments/:commId', checkAuth, CommentController.remove)
 
 
-app.listen(PORT, (err) => {
+app.listen(process.env.PORT || PORT, (err) => {
   if (err) {
     return console.log(err)
   }
-  console.log('Server run on port: ', PORT)
+  console.log('Server run')
 })
