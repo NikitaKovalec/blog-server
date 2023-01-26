@@ -19,7 +19,13 @@ const app = express()
 import http from 'http';
 const server = http.createServer(app)
 import {Server} from 'socket.io';
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: process.env.CLIENT_URL,
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
 
 io.on('connection', (socket) => {
   socket.on('send-message', (data) => {
