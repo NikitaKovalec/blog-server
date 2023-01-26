@@ -16,22 +16,22 @@ mongoose.connect(process.env.MONGODB_URL)
 const PORT = 4000
 const app = express()
 
-import http from 'http';
-const server = http.createServer(app)
-import {Server} from 'socket.io';
-const io = new Server(server, {
-  cors: {
-    origin: process.env.CLIENT_URL,
-    methods: ["GET", "POST"],
-    credentials: true
-  }
-});
-
-io.on('connection', (socket) => {
-  socket.on('send-message', (data) => {
-    io.emit('new-message', data);
-  });
-});
+// import http from 'http';
+// const server = http.createServer(app)
+// import {Server} from 'socket.io';
+// const io = new Server(server, {
+//   cors: {
+//     origin: [process.env.CLIENT_URL],
+//     methods: ["GET", "POST"],
+//     credentials: true
+//   }
+// });
+//
+// io.on('connection', (socket) => {
+//   socket.on('send-message', (data) => {
+//     io.emit('new-message', data);
+//   });
+// });
 
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
@@ -77,7 +77,7 @@ app.post('/posts/:id/comments', checkAuth, CommentController.create)
 app.delete('/posts/:id/comments/:commId', checkAuth, CommentController.remove)
 
 
-server.listen(process.env.PORT || PORT, (err) => {
+app.listen(process.env.PORT || PORT, (err) => {
   if (err) {
     return console.log(err)
   }
