@@ -21,7 +21,7 @@ const server = http.createServer(app)
 import {Server} from 'socket.io';
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: process.env.REACT_APP_API_URL,
     methods: ["GET", "POST"],
     credentials: true
   }
