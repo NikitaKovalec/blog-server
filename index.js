@@ -16,22 +16,10 @@ mongoose.connect(process.env.MONGODB_URL)
 const PORT = 4000
 const app = express()
 
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  next();
-});
-
 import http from 'http';
 const server = http.createServer(app)
 import {Server} from 'socket.io';
-const io = new Server(server, {
-  cors: {
-    origin: 'blog-nkov.vercel.app',
-    methods: ["GET", "POST"],
-    credentials: true
-  }
-});
+const io = new Server(server);
 
 io.on('connection', (socket) => {
   socket.on('send-message', (data) => {
